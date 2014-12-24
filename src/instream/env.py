@@ -1,0 +1,2 @@
+MONGO = None
+APP_CELERY = None

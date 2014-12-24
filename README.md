@@ -1,4 +1,17 @@
-# inbox-weibo
+# instream
+
+## Stack
+
+- buildout
+- django
+- AngularJS
+- Restful API
+- celery
+- pandas
+- gevent/asyncio
+- machine learning
+    + clustering
+- ansible
 
 ## thoughts
 
@@ -21,3 +34,19 @@
     + 图片类
     + 自动识别链接内容 判断链接类型
 - 架构
+
+## Architecture
+
+- Jobs & Celery
+    + Crawler
+    + ETL
+    + NLP
+    + ML
+    + FGD
+- FE
+    + AngularJS
+    + Less
+- Deploy
+    + ansible | fabric
+- API
+- Schedule

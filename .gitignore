@@ -56,3 +56,6 @@ target/
 # virtualenv
 bin/
 include/
+
+# buildout
+.mr.developer.cfg
