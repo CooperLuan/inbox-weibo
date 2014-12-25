@@ -10,17 +10,11 @@ https://api.weibo.com/oauth2/authorize?client_id=3349407943&response_type=code&r
 import logging
 log = logging.getLogger(__name__)
 log.setLevel(logging.INFO)
-import sys
-sys.path.append('/Users/luanyanming/code/weibo-center')
-from weibo_api import WeiboAPI
 import requests
 
-from . import env
-from .weibo_models import StatusesModel
-from .token import get_token
-
-
-access_token = get_token()['access_token']
+from instream import env
+from instream.jobs.crawler.weibo.base.api import WeiboAPI
+from instream.jobs.crawler.weibo.base.models import StatusesModel
 
 
 def oauth():

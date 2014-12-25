@@ -19,5 +19,6 @@ setup(
     ],
     entry_points="""\
     [console_scripts]
-    token = instream.token:get_token
+    instream-run = instream.run:main
+    token = instream.cli.rc:get_weibo_token
     """)

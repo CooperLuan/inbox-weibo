@@ -1,9 +1,11 @@
-mongo_url: mongodb://localhost:27017/inbox-weibo
+mongo_url: mongodb://localhost:27017/instream
+redis_url: redis://@localhost:6379/9
 celery:
-    BROKER_URL: redis://
-    CELERY_RESULT_BACKEND: redis://localhost
+    BROKER_URL: redis://localhost/9
+    CELERY_RESULT_BACKEND: redis://localhost/9
     CELERY_TASK_SERIALIZER: 'json'
     CELERY_RESULT_SERIALIZER: 'json'
     CELERY_ACCEPT_CONTENT: ['json']
     CELERY_TIMEZONE: 'Asia/Shanghai'
-    CELERY_ENABLE_UTC: True
+    CELERY_ENABLE_UTC: true
+    CELERY_DISABLE_RATE_LIMITS: true
