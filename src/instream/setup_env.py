@@ -14,11 +14,9 @@ def setup_db(d):
     env.MONGO = pymongo.MongoClient(mongo_url)[db]
     env.REDIS = StrictRedis.from_url(d['redis_url'])
 
-    for coll_name, fields in {
-        'weibo_statuses': ['id', 'mid'],
-    }.items():
+    for collection, fields in d['mongo_indexes'].items():
         for field in fields:
-            env.MONGO[coll_name].ensure_index(field)
+            env.MONGO[collection].ensure_index(field)
 
 
 def setup_celery(d):

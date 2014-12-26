@@ -51,9 +51,37 @@
 - API
 - Schedule
 
+## Workflow
+
+1. Scheduler
+
+   create `schedule` document in `schedules`, call `Route` to add crawler job
+2. Crawler
+
+   - process `schedule`, create `seeds`
+   - process `seed`, yield `ETL` job by `Route`
+3. ETL
+4. NLP
+5. ML
+6. FGD
+7. FE
+
 ## Jobs DataStructure
 
 ### Schedule
+
+> input
+
+```javascript
+{
+    "route": "",
+    "title": "",
+    "args": [],
+    "kwargs": {},
+}
+```
+
+> output
 
 ```javascript
 // schedules
@@ -90,6 +118,12 @@ var doc_seed = {
 
 ### Crawler
 
+> input
+
+document `_id` of schedule
+
+> ouput
+
 ```javascript
 // webpages
 var doc_webpage = {
@@ -115,6 +149,12 @@ var doc_webpage = {
 ```
 
 ### ETL
+
+> input
+
+document `_id` of webpage
+
+> ouput
 
 ```javascript
 // etl
@@ -202,3 +242,16 @@ TODO
 ### FE
 
 ### API
+
+## Celery
+
+### Queues
+
+- scheduler
+- crawler
+- extractor
+- transformer
+- loader
+- nlp
+- ml
+- fdg

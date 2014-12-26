@@ -6,7 +6,6 @@ def main():
     setup_env()
     job = WeiboStatusesCrawlerJob()
     job.run()
-    # job
 
 
 if __name__ == '__main__':
