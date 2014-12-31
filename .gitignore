@@ -59,3 +59,7 @@ include/
 
 # buildout
 .mr.developer.cfg
+
+# ipython
+.ipynb_checkpoints/
+

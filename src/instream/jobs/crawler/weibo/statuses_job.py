@@ -25,7 +25,7 @@ class WeiboStatusesCrawlerJob(WeiboCrawlerJob):
     def _get_since_id(self):
         since_id = self.model_statuses.get_statuses(count=1)
         try:
-            return next(since_id)[0]['id']
+            return next(since_id)[0]['collected']['data']['body']['id']
         except (IndexError, StopIteration):
             pass
         except Exception as e:
