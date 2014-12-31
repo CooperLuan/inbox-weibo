@@ -3,8 +3,7 @@ mongo_indexes:
     schedules: ['title', 'route']
     seeds: ['_scheduleId', 'route']
     webpages: ['collected.data.route', 'scheduled._scheduleId', 'collected.time']
-    etl: ['collected.data.route', 'extracted.ok', 'transformed.ok', 'loaded.ok']
-    stream: ['souce', 'id']
+    streams: ['souce', 'id']
     profiles: ['id', 'name']
 redis_url: redis://@localhost:6379/9
 celery:

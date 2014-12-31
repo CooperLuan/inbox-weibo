@@ -4,6 +4,7 @@ import pymongo
 import yaml
 from celery import Celery
 from redis import StrictRedis
+import jieba
 
 from instream import env
 
@@ -23,19 +24,26 @@ def setup_celery(d):
     env.APP_CELERY = Celery('tasks', **d)
 
 
+def setup_jieba():
+    jieba.initialize()
+
+
 def setup(d):
     setup_db(d)
     setup_celery(d['celery'])
+    setup_jieba()
 
 
-def main():
-    parser = argparse.ArgumentParser(description="InboxStream")
-    parser.add_argument('config', type=str,
-                        help="Configuration file")
+def main(config=None):
+    if config is None:
+        parser = argparse.ArgumentParser(description="InboxStream")
+        parser.add_argument('config', type=str,
+                            help="Configuration file")
 
-    args = parser.parse_args()
+        args = parser.parse_args()
+        config = args.config
 
-    setup(yaml.load(open(args.config).read()))
+    setup(yaml.load(open(config).read()))
 
 
 if __name__ == '__main__':

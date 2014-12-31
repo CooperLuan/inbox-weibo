@@ -1,10 +1,14 @@
+import time
+import re
+import traceback
+
 from instream import env
 from instream.jobs.crawler.weibo.base.api import WeiboAPI
 from instream.jobs.crawler.weibo.base.models import StatusesModel
 from instream.jobs.crawler.crawler_weibo_job import WeiboCrawlerJob
-from instream.cli.rc import get_weibo_token
+from instream.jobs.route import Route
 
-access_token = get_weibo_token()['access_token']
+__all__ = ['WeiboStatusesCrawlerJob']
 
 
 class WeiboStatusesCrawlerJob(WeiboCrawlerJob):
@@ -17,16 +21,13 @@ class WeiboStatusesCrawlerJob(WeiboCrawlerJob):
 
     def __init__(self):
         WeiboCrawlerJob.__init__(self)
-        self.model_statuses = StatusesModel()
-        self.access_token = access_token
-        self.since_id = self._get_since_id() or 0
-        self.max_id = 0
-        self.api = WeiboAPI(access_token=self.access_token)
 
     def _get_since_id(self):
         since_id = self.model_statuses.get_statuses(count=1)
         try:
             return next(since_id)[0]['id']
+        except (IndexError, StopIteration):
+            pass
         except Exception as e:
             self.log.warning(e)
 
@@ -51,12 +52,45 @@ class WeiboStatusesCrawlerJob(WeiboCrawlerJob):
             'id': {'$gt': self.since_id}
         })
 
-    def run(self):
+    def run(self, _id, collection):
+        seed = env.MONGO[collection].find_one({'_id': _id})
+        kwargs = seed.pop('kwargs', {})
+
+        self.model_statuses = StatusesModel()
+        self.access_token = kwargs.pop('access_token')
+        self.since_id = self._get_since_id() or 0
+        self.max_id = 0
+        self.api = WeiboAPI(access_token=self.access_token)
+
+        webpage_template = {
+            '_seed': {
+                '_scheduleId': seed['_scheduleId'],
+                '_seedId': seed['_id'],
+            },
+            'collected': {
+                'time': time.time(),
+                'errs': [],
+                'data': {
+                    'route': seed['route'],
+                    'body': None,
+                }
+            }
+        }
+        next_route = re.sub(r'crawler\.', r'etl.extractors.', seed['route'])
+        self.log.info('start crawl weibo statuses from %s' % self.since_id)
+        next_job_ids = []
         try:
             for resp in self._fetch_new(self.since_id) or []:
-                self.model_statuses.save_statuses(resp)
-        except Exception as e:
-            self.log.error(e)
+                _ids = self.model_statuses.save_statuses(
+                    webpage_template, resp)
+                next_job_ids.extend(_ids)
+        except:
+            self.log.error(traceback.format_exc())
             self.log.warning('roll back')
             self._failover()
             self.log.warning('please run again')
+        for _id in next_job_ids:
+            self.gen_next_job(next_route, _id)
+
+    def gen_next_job(self, next_route, _id):
+        Route().run(next_route, _id, 'webpages')

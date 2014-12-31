@@ -1,3 +1,6 @@
+import logging
+logging.basicConfig(level=logging.INFO)
+
 from celery.task import Task
 from celery.utils.log import get_task_logger
 

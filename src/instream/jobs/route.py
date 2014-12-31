@@ -10,10 +10,11 @@ class Route(Job):
         """
         @route str : crawler.weibo.statuses
         """
-        doc = env.MONGO[collection].find_one({'_id': _id})
-        kwargs = doc.pop('kwargs', {})
+        # doc = env.MONGO[collection].find_one({'_id': _id})
+        # kwargs = doc.pop('kwargs', {})
         module_path = 'instream.jobs.' + route + '_job'
-        route_parts = route.split('.')
         module = importlib.import_module(module_path)
         job_class = getattr(module, module.__all__[0])
-        job_class().apply_async(kwargs=kwargs, queue=route_parts[0])
+        # route_parts = route.split('.')
+        # job_class().apply_async((_id, collection), queue=route_parts[0])
+        job_class().run(_id, collection)

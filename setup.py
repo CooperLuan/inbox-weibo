@@ -16,9 +16,12 @@ setup(
         'django',
         'celery',
         'rq',
+        'python-dateutil',
+        'jieba3k',
     ],
     entry_points="""\
     [console_scripts]
     instream-run = instream.run:main
+    instream-app = instream.app:main
     token = instream.cli.rc:get_weibo_token
     """)

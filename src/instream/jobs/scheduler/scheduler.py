@@ -7,12 +7,16 @@ __all__ = ['Scheduler']
 
 
 class Scheduler(Job):
+
+    """
+    create shcedule and first seed
+    """
     __collection__ = 'schedules'
 
     def run(self, **kwargs):
-        if not all(
+        if not all(map(
                 lambda x: x in kwargs,
-                ['title', 'route', 'kwargs']):
+                ['title', 'route', 'kwargs'])):
             raise Exception('invalid schedule %s' % kwargs)
         doc = {
             "title": kwargs.pop('title'),
