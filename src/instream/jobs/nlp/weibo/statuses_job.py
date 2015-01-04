@@ -5,6 +5,7 @@ __all__ = ['WeiboStatusesNLPJob']
 
 
 class WeiboStatusesNLPJob(NLPJob):
+    next_job = 'ml.weibo.statuses'
 
     def nlp(self, doc):
         k = 'retweeted_status'

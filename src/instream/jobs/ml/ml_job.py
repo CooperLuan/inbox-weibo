@@ -5,8 +5,8 @@ from instream import env
 from instream.jobs.route import Route
 
 
-class NLPJob(Job):
-    ns = 'nlp'
+class MLJob(Job):
+    ns = 'ml'
 
     def __init__(self):
         Job.__init__(self)
@@ -16,7 +16,7 @@ class NLPJob(Job):
         self.log.info('Job %s _id %s' % (self.__class__.__name__, _id))
         self.collection = env.MONGO[collection]
         doc = self.collection.find_one({'_id': _id})
-        self.nlp(doc)
+        self.ml(doc)
         self.collection.update({
             '_id': _id,
         }, {
@@ -25,7 +25,8 @@ class NLPJob(Job):
                 'time': time.time(),
             }}
         })
-        self.gen_next_job(_id)
+        # TODO
+        # self.gen_next_job(_id)
 
     def gen_next_job(self, _id):
         Route().run(self.next_job, _id, 'streams')
