@@ -3,7 +3,7 @@ mongo_indexes:
     schedules: ['title', 'route']
     seeds: ['_scheduleId', 'route']
     webpages: ['collected.data.route', 'scheduled._scheduleId', 'collected.time']
-    streams: ['souce', 'id']
+    streams: ['souce', 'id', 'ml.data.tags', 'ml.data.categories']
     profiles: ['id', 'name']
 redis_url: redis://@localhost:6379/9
 celery:
@@ -15,3 +15,4 @@ celery:
     CELERY_TIMEZONE: 'Asia/Shanghai'
     CELERY_ENABLE_UTC: true
     CELERY_DISABLE_RATE_LIMITS: true
+ictclas: /home/caigen100/cooper/ICTCLAS2015-python/

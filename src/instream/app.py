@@ -51,6 +51,13 @@ def start_nlp():
         Route().run(route, _id, 'streams')
 
 
+def start_ml():
+    _ids = env.MONGO.streams.distinct('_id')
+    route = 'ml.weibo.statuses'
+    for _id in _ids:
+        Route().run(route, _id, 'streams')
+
+
 def main():
     try:
         step = sys.argv[1]

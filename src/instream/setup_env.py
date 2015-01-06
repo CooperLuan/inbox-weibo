@@ -32,6 +32,7 @@ def setup(d):
     setup_db(d)
     setup_celery(d['celery'])
     setup_jieba()
+    env.CONF = d
 
 
 def main(config=None):
