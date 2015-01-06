@@ -1,3 +1,5 @@
+import re
+
 from instream.jobs.etl.extractor_job import ExtractorJob
 __all__ = ['WeiboStatusesExtractorJob']
 
@@ -8,6 +10,10 @@ class WeiboStatusesExtractorJob(ExtractorJob):
 
     def extract(self, doc):
         crawled = doc['collected']['data']['body']
+        self.extract_data(crawled)
+        self.extract_topics(crawled)
+
+    def extract_data(self, crawled):
         keys = [
             'comments_count', 'idstr', 'text', 'created_at', 'id',
             'in_reply_to_screen_name', 'in_reply_to_user_id',
@@ -30,3 +36,8 @@ class WeiboStatusesExtractorJob(ExtractorJob):
             if 'user' in self.data[key]:
                 self.data[key]['user'] = apply_filter(
                     self.data[key]['user'], user_keys)
+
+    def extract_topics(self, crawled):
+        text = self.data.get('text', '')
+        topics = re.findall(r'#(.{1,10})#', text, re.S)
+        self.data['topics'] = topics or []

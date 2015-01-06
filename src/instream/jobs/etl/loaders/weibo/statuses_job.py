@@ -13,6 +13,7 @@ class WeiboStatusesLoaderJob(LoaderJob):
         transformed['user'] = {
             'source': 'weibo',
             'id': transformed_user['id'],
+            'name': transformed_user['name'],
         }
         _id = self.upsert_stream(['source', 'id'], transformed)
         self.upsert_profile(['source', 'id'], transformed_user)
