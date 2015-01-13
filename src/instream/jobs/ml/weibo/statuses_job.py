@@ -25,10 +25,11 @@ class WeiboStatusesMLJob(MLJob):
         - Bad
         - Sports
         - Education
+        - Relaxing
         """
         _buildin_cats = [
             'Shopping', 'Technology', 'History', 'Science', 'English',
-            'Inspiring', 'Bad', 'Sports', 'Education']
+            'Inspiring', 'Bad', 'Sports', 'Education', 'Relaxing']
         self.data['categories'] = list(filter(
             lambda x: getattr(self, 'ml_is_%s' % x.lower())(),
             _buildin_cats))
@@ -135,6 +136,16 @@ class WeiboStatusesMLJob(MLJob):
         - 教育
         """
         keywords = '孩子/教育'.split('/')
+        return self._is_in_text(keywords)
+
+    def ml_is_relaxing(self):
+        """
+        - 旅行
+        - 旅游
+        - 青旅
+        - 穷游
+        """
+        keywords = '旅游/旅行/青旅/穷游'.split('/')
         return self._is_in_text(keywords)
 
     def _is_in_text(self, keywords):
