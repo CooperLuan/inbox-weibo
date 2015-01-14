@@ -21,7 +21,7 @@ class BaseTestCase(unittest.TestCase):
             'schedules': ['title', 'route'],
             'seeds': ['_scheduleId', 'route'],
             'webpages': ['collected.data.route', 'scheduled._scheduleId', 'collected.time'],
-            'stream': ['souce', 'id', 'ml.data.tags', 'ml.data.categories'],
+            'streams': ['souce', 'id', 'ml.data.tags', 'ml.data.categories', 'created_at'],
             'profiles': ['id', 'name'],
         }
     }

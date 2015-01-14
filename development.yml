@@ -3,7 +3,7 @@ mongo_indexes:
     schedules: ['title', 'route']
     seeds: ['_scheduleId', 'route']
     webpages: ['collected.data.route', 'scheduled._scheduleId', 'collected.time']
-    streams: ['souce', 'id', 'ml.data.tags', 'ml.data.categories']
+    streams: ['souce', 'id', 'ml.data.tags', 'ml.data.categories', 'created_at']
     profiles: ['id', 'name']
 redis_url: redis://@localhost:6379/9
 celery:
