@@ -1,19 +1,6 @@
 # instream[In-Development]
 
-## Stack
-
-- buildout
-- django
-- AngularJS
-- Restful API
-- celery / flower
-- pandas
-- gevent/asyncio
-- machine learning
-    + clustering
-- ansible
-
-## thoughts
+## 需求
 
 - 像 inbox 一样对信息流进行处理
     + 分大类
