@@ -6,7 +6,10 @@ usage:
 import sys
 
 from instream.setup_env import main as setup_main
-setup_main('development.yml')
+
+conf = sys.argv[1]
+setup_main(conf)
+
 from instream.jobs.scheduler.scheduler import Scheduler as SchedulerJob
 from instream.jobs.route import Route
 from instream.cli.rc import get_weibo_token
@@ -60,7 +63,7 @@ def start_ml():
 
 def main():
     try:
-        step = sys.argv[1]
+        step = sys.argv[2]
     except IndexError:
         print('please input step : scheduler/crawler/etl/nlp')
     func_name = 'start_%s' % step

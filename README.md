@@ -21,3 +21,18 @@
     + 图片类
     + 自动识别链接内容 判断链接类型
 - 架构
+
+## Install
+
+```sh
+virtualenv -p /usr/bin/python3 .
+bin/python setup.py develop
+```
+
+## Cron Job
+
+```sh
+bin/python src/instream/app.py development.yml crawler
+# or
+# bin/instream-app development.yml crawler
+```
