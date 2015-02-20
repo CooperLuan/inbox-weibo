@@ -1,5 +1,6 @@
 import logging
-logging.basicConfig(level=logging.INFO)
+formatter = '%(asctime)-15s - %(name)s - %(levelname)s - %(message)s'
+logging.basicConfig(level=logging.INFO, format=formatter)
 
 from celery.task import Task
 from celery.utils.log import get_task_logger
